@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevClub — Design System</title>
+<meta name="description" content="Sistema de design da DevClub: cores, tipografia, espaçamento, efeitos e componentes, extraídos e adaptados de referências de mercado.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700;800&family=Aldrich&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     TOKENS — espelham 1:1 interface/app/globals.css (tema dark
+     único da DevClub). Novos tokens (sombra, vidro, glow,
+     gradiente) foram sintetizados a partir das referências e
+     expressos só com as cores da marca — nunca com matizes novos.
+     ============================================================ */
+  :root {
+    --background: #131313;
+    --foreground: #FFFFFF;
+    --card: #201f22;
+    --card-foreground: #FFFFFF;
+    --popover: #2A292C;
+    --popover-foreground: #FFFFFF;
+    --primary: #39D353;
+    --primary-foreground: #0E1B12;
+    --secondary: #721AE7;
+    --secondary-foreground: #FFFFFF;
+    --muted: #2A292C;
+    --muted-foreground: #AAAEB3;
+    --accent: #23302A;
+    --accent-foreground: #39D353;
+    --destructive: #EF4444;
+    --border: #FFFFFF14;
+    --input: #FFFFFF1F;
+    --ring: #39D353;
+    --chart-1: #39D353;
+    --chart-2: #721AE7;
+    --chart-3: #FFFFFF;
+    --chart-4: #AAAEB3;
+    --chart-5: #AAAEB3;
+
+    --radius: 0.75rem;
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+    --radius-full: 999px;
+
+    --font-sans: "Albert Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-heading: "Aldrich", ui-sans-serif, system-ui, sans-serif;
+
+    /* Elevação — sombras escuras e sutis (padrão observado em
+       Combo/Academy Skills e Reflect Notes: camadas de baixa
+       opacidade, nada de preto puro). */
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.32);
+    --shadow-md: 0 8px 20px -6px rgba(0,0,0,.4);
+    --shadow-lg: 0 24px 48px -12px rgba(0,0,0,.5);
+    --shadow-inset-gloss: inset 0 1px 0 rgba(255,255,255,.06);
+
+    /* Glow de marca — halo suave atrás de CTAs e cards, no espírito
+       do "aura background" da Asimov Academy e do glow radial da
+       Adapta.org, recolorido para verde/roxo da DevClub. */
+    --shadow-glow-primary: 0 0 0 1px color-mix(in oklch, var(--primary) 30%, transparent), 0 10px 32px -8px color-mix(in oklch, var(--primary) 55%, transparent);
+    --shadow-glow-secondary: 0 0 0 1px color-mix(in oklch, var(--secondary) 30%, transparent), 0 10px 32px -8px color-mix(in oklch, var(--secondary) 55%, transparent);
+
+    /* Vidro — glassmorphism visto em Adapta, Reflect e Combo. */
+    --glass-bg: color-mix(in oklch, var(--card) 60%, transparent);
+    --glass-border: color-mix(in oklch, var(--foreground) 10%, transparent);
+    --glass-blur: 18px;
+
+    /* Gradiente de marca — mesma ideia do gradiente de 3 tons da
+       Reflect Notes, mas usando só verde + roxo da DevClub. */
+    --gradient-brand: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    --gradient-brand-soft: linear-gradient(135deg, color-mix(in oklch, var(--primary) 16%, transparent), color-mix(in oklch, var(--secondary) 16%, transparent));
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 400; margin: 0; letter-spacing: -0.01em; }
+  p { margin: 0; }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+  code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+  section { padding: 4.5rem 0; border-bottom: 1px solid var(--border); }
+  section:last-of-type { border-bottom: none; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 1.75rem; }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: .75rem;
+  }
+  .section-title { font-size: clamp(1.5rem, 2.4vw, 2rem); color: var(--foreground); }
+  .section-lede { color: var(--muted-foreground); max-width: 62ch; margin-top: .75rem; font-size: 1.0625rem; }
+  .section-head { margin-bottom: 2.5rem; }
+
+  /* ---------- Nav ---------- */
+  .topnav {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem;
+    padding: .85rem 1.75rem;
+    background: color-mix(in oklch, var(--background) 72%, transparent);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border-bottom: 1px solid var(--border);
+  }
+  .topnav-brand { display: flex; align-items: center; gap: .6rem; font-family: var(--font-heading); font-size: .95rem; letter-spacing: .02em; }
+  .topnav-brand img { height: 26px; width: auto; }
+  .topnav-links { display: flex; flex-wrap: wrap; gap: 1.35rem; font-size: .8125rem; color: var(--muted-foreground); }
+  .topnav-links a { text-decoration: none; transition: color .15s ease; }
+  .topnav-links a:hover { color: var(--primary); }
+
+  /* ---------- Hero ---------- */
+  .ds-hero { position: relative; padding: 5.5rem 0 4rem; overflow: hidden; border-bottom: 1px solid var(--border); }
+  .ds-hero::before {
+    content: ""; position: absolute; inset: -20% -10% auto -10%; height: 70%;
+    background:
+      radial-gradient(45% 60% at 20% 20%, color-mix(in oklch, var(--primary) 24%, transparent), transparent 70%),
+      radial-gradient(40% 55% at 85% 10%, color-mix(in oklch, var(--secondary) 26%, transparent), transparent 70%);
+    filter: blur(10px);
+    pointer-events: none;
+  }
+  .ds-hero .wrap { position: relative; }
+  .ds-hero h1 { font-size: clamp(2.1rem, 5vw, 3.4rem); max-width: 18ch; }
+  .ds-hero .section-lede { font-size: 1.125rem; max-width: 60ch; }
+  .source-pills { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 2rem; }
+  .source-pill {
+    font-size: .75rem; padding: .4rem .8rem; border-radius: var(--radius-full);
+    border: 1px solid var(--border); color: var(--muted-foreground);
+    background: color-mix(in oklch, var(--card) 70%, transparent);
+  }
+
+  /* ---------- Color swatches ---------- */
+  .swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+  .swatch {
+    border: 1px solid var(--border); border-radius: var(--radius-xl); overflow: hidden;
+    background: var(--card); cursor: pointer; text-align: left; padding: 0; font: inherit; color: inherit;
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .swatch:hover { transform: translateY(-2px); border-color: color-mix(in oklch, var(--primary) 40%, var(--border)); }
+  .swatch-fill { height: 76px; }
+  .swatch-meta { padding: .8rem .9rem; }
+  .swatch-name { font-size: .8125rem; font-weight: 600; }
+  .swatch-var { font-size: .75rem; color: var(--muted-foreground); margin-top: .15rem; }
+  .swatch-copied { color: var(--primary); }
+
+  /* ---------- Type scale ---------- */
+  .type-row { display: flex; align-items: baseline; gap: 1.5rem; padding: 1.1rem 0; border-top: 1px solid var(--border); }
+  .type-row:first-of-type { border-top: none; }
+  .type-sample { font-family: var(--font-heading); color: var(--foreground); }
+  .type-meta { margin-left: auto; text-align: right; font-size: .75rem; color: var(--muted-foreground); white-space: nowrap; }
+  .type-row.body .type-sample { font-family: var(--font-sans); }
+
+  /* ---------- Radius / spacing ---------- */
+  .token-strip { display: flex; flex-wrap: wrap; gap: 1.25rem; align-items: flex-end; }
+  .token-box {
+    width: 84px; height: 84px; background: var(--accent); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center; color: var(--muted-foreground); font-size: .7rem;
+  }
+  .token-box-label { text-align: center; font-size: .75rem; color: var(--muted-foreground); margin-top: .5rem; }
+  .space-strip { display: flex; align-items: flex-end; gap: .75rem; }
+  .space-bar { background: var(--primary); border-radius: 3px; width: 10px; }
+
+  /* ---------- Shadow / glass ---------- */
+  .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.5rem; }
+  .demo-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-2xl);
+    padding: 1.75rem; height: 140px; display: flex; align-items: flex-end; font-size: .8125rem; color: var(--muted-foreground);
+  }
+  .demo-card.shadow-sm { box-shadow: var(--shadow-sm); }
+  .demo-card.shadow-md { box-shadow: var(--shadow-md); }
+  .demo-card.shadow-lg { box-shadow: var(--shadow-lg); }
+  .demo-card.glass {
+    background: var(--glass-bg); border-color: var(--glass-border);
+    backdrop-filter: blur(var(--glass-blur)); -webkit-backdrop-filter: blur(var(--glass-blur));
+  }
+  .demo-card.glow-primary { box-shadow: var(--shadow-glow-primary); border-color: transparent; }
+  .demo-card.glow-secondary { box-shadow: var(--shadow-glow-secondary); border-color: transparent; }
+  .aura-stage {
+    position: relative; border-radius: var(--radius-3xl); border: 1px solid var(--border);
+    background: var(--background); height: 220px; overflow: hidden; display: flex; align-items: center; justify-content: center;
+  }
+  .aura-blob {
+    position: absolute; width: 60%; height: 140%; border-radius: 50%; filter: blur(48px); opacity: .55;
+  }
+  .aura-blob.primary { background: var(--primary); left: -10%; top: -20%; }
+  .aura-blob.secondary { background: var(--secondary); right: -10%; bottom: -20%; }
+  .aura-stage span { position: relative; font-size: .8125rem; color: var(--muted-foreground); text-align: center; padding: 0 1.5rem; }
+
+  /* ---------- Buttons ---------- */
+  .btn-row { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+  .btn {
+    appearance: none; border: 1px solid transparent; cursor: pointer;
+    font-family: var(--font-sans); font-weight: 600; font-size: .875rem;
+    padding: .7rem 1.35rem; border-radius: var(--radius-lg);
+    transition: transform .15s ease, opacity .15s ease, background .15s ease;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--primary); color: var(--primary-foreground); }
+  .btn-primary:hover { opacity: .85; }
+  .btn-secondary { background: var(--secondary); color: var(--secondary-foreground); }
+  .btn-secondary:hover { opacity: .85; }
+  .btn-outline { background: transparent; border-color: var(--border); color: var(--foreground); }
+  .btn-outline:hover { background: var(--muted); }
+  .btn-ghost { background: transparent; color: var(--foreground); }
+  .btn-ghost:hover { background: var(--muted); }
+  .btn-destructive { background: color-mix(in oklch, var(--destructive) 15%, transparent); color: var(--destructive); }
+
+  /* Glow/pill CTA — variação de marketing inspirada nos botões-pílula
+     com borda em gradiente girando de Asimov Academy e Adapta.org,
+     e no SpecularButton (WebGL) já usado em components/ui/specular-button.tsx. */
+  @property --angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+  .btn-glow {
+    display: inline-flex; padding: 2px; border-radius: var(--radius-full);
+    background: conic-gradient(from var(--angle), var(--primary), var(--secondary), var(--primary));
+    animation: spin 4s linear infinite;
+  }
+  @keyframes spin { to { --angle: 360deg; } }
+  .btn-glow span {
+    display: flex; align-items: center; gap: .5rem;
+    background: color-mix(in oklch, var(--background) 92%, transparent);
+    backdrop-filter: blur(12px);
+    border-radius: var(--radius-full);
+    padding: .75rem 1.5rem;
+    font-weight: 600; font-size: .875rem; color: var(--foreground);
+  }
+
+  /* ---------- Badges ---------- */
+  .badge-row { display: flex; flex-wrap: wrap; gap: .6rem; }
+  .badge {
+    display: inline-flex; align-items: center; gap: .4rem;
+    font-size: .75rem; font-weight: 600; padding: .4rem .85rem;
+    border-radius: var(--radius-full); border: 1px solid transparent;
+  }
+  .badge-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .badge-primary { background: color-mix(in oklch, var(--primary) 14%, transparent); color: var(--primary); }
+  .badge-primary .badge-dot { background: var(--primary); }
+  .badge-secondary { background: color-mix(in oklch, var(--secondary) 16%, transparent); color: #c9a3fb; }
+  .badge-secondary .badge-dot { background: var(--secondary); }
+  .badge-accent { background: var(--accent); color: var(--accent-foreground); }
+  .badge-accent .badge-dot { background: var(--accent-foreground); }
+  .badge-neutral { background: var(--muted); color: var(--muted-foreground); border-color: var(--border); }
+  .badge-neutral .badge-dot { background: var(--muted-foreground); }
+  .badge-gradient { background: var(--gradient-brand-soft); color: var(--foreground); border-color: var(--border); }
+  .badge-gradient .badge-dot { background: var(--gradient-brand); }
+
+  /* ---------- Cards ---------- */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-2xl);
+    padding: 1.75rem; box-shadow: var(--shadow-sm);
+  }
+  .card h4 { font-size: 1.0625rem; color: var(--foreground); margin-bottom: .5rem; }
+  .card p { color: var(--muted-foreground); font-size: .875rem; }
+
+  /* Course card — estrutura de "course-card" (barra de destaque +
+     ícone + título + duração) observada na Asimov Academy, recolorida
+     por trilha usando só tokens da marca. */
+  .course-card { position: relative; padding-top: 1.5rem; overflow: hidden; }
+  .course-card::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--course-accent, var(--primary));
+  }
+  .course-icon {
+    width: 40px; height: 40px; border-radius: var(--radius-lg);
+    background: color-mix(in oklch, var(--course-accent, var(--primary)) 16%, transparent);
+    color: var(--course-accent, var(--primary));
+    display: flex; align-items: center; justify-content: center; font-size: 1.1rem; margin-bottom: 1rem;
+  }
+  .course-duration { display: block; margin-top: 1rem; font-size: .75rem; color: var(--muted-foreground); }
+
+  /* Spotlight card — glow que segue o cursor, no espírito dos cards
+     da Reflect Notes e Combo Academy Skills. */
+  .card-spotlight {
+    position: relative; background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius-2xl); padding: 1.75rem; overflow: hidden;
+  }
+  .card-spotlight::before {
+    content: ""; position: absolute; inset: 0; opacity: 0; transition: opacity .25s ease;
+    background: radial-gradient(220px circle at var(--x, 50%) var(--y, 50%), color-mix(in oklch, var(--primary) 20%, transparent), transparent 70%);
+  }
+  .card-spotlight:hover::before { opacity: 1; }
+
+  /* Testimonial card — inspirado no card "Depoimento" da Combo
+     Academy Skills. */
+  .card-testimonial { display: flex; flex-direction: column; gap: 1rem; }
+  .card-testimonial .quote { font-family: var(--font-heading); font-size: 1rem; line-height: 1.5; color: var(--foreground); }
+  .card-testimonial .author { display: flex; align-items: center; gap: .65rem; }
+  .avatar-dot {
+    width: 34px; height: 34px; border-radius: 50%; background: var(--gradient-brand);
+    display: flex; align-items: center; justify-content: center; font-size: .7rem; font-weight: 700; color: var(--foreground);
+  }
+  .author-name { font-size: .8125rem; font-weight: 600; }
+  .author-role { font-size: .75rem; color: var(--muted-foreground); }
+
+  /* ---------- Motion ---------- */
+  .marquee { position: relative; overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1.25rem 0; }
+  .marquee-track { display: flex; width: max-content; gap: 3rem; animation: marquee 16s linear infinite; }
+  .marquee-track span { font-family: var(--font-heading); font-size: 1rem; color: var(--muted-foreground); white-space: nowrap; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  .stagger-demo { font-family: var(--font-heading); font-size: clamp(1.3rem, 3vw, 2rem); display: flex; flex-wrap: wrap; gap: .5ch; }
+  .stagger-demo span { display: inline-block; opacity: 0; transform: translateY(14px); animation: revealUp .6s cubic-bezier(.4,0,.2,1) forwards; }
+  @keyframes revealUp { to { opacity: 1; transform: translateY(0); } }
+
+  .attrib-list { display: grid; gap: .9rem; }
+  .attrib-item { display: grid; grid-template-columns: 180px 1fr; gap: 1rem; padding: 1rem 0; border-top: 1px solid var(--border); font-size: .875rem; }
+  .attrib-item:first-child { border-top: none; }
+  .attrib-site { font-family: var(--font-heading); color: var(--foreground); font-size: .8125rem; }
+  .attrib-note { color: var(--muted-foreground); }
+
+  footer { padding: 3rem 0; text-align: center; color: var(--muted-foreground); font-size: .8125rem; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn-glow, .marquee-track, .stagger-demo span { animation: none !important; }
+    .stagger-demo span { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-brand">
+    <img src="/LOGO.webp" alt="DevClub">
+    <span>Design System</span>
+  </div>
+  <div class="topnav-links">
+    <a href="#cores">Cores</a>
+    <a href="#tipografia">Tipografia</a>
+    <a href="#escala">Raio &amp; Espaço</a>
+    <a href="#elevacao">Elevação &amp; Vidro</a>
+    <a href="#glow">Glow &amp; Aura</a>
+    <a href="#botoes">Botões</a>
+    <a href="#badges">Badges</a>
+    <a href="#cards">Cards</a>
+    <a href="#motion">Movimento</a>
+    <a href="#fontes">Fontes</a>
+  </div>
+</nav>
+
+<header class="ds-hero">
+  <div class="wrap">
+    <span class="eyebrow">DevClub · Sistema de Design</span>
+    <h1>Um só idioma visual, construído a partir do que já funciona no mercado.</h1>
+    <p class="section-lede">
+      Esta página reúne cor, tipografia, espaçamento, sombra e efeitos já definidos em
+      <code>app/globals.css</code>, ampliados com padrões extraídos de cinco sites de
+      referência — sempre reexpressos com as cores da própria DevClub (<strong style="color:var(--primary)">#39D353</strong>
+      e <strong style="color:#c9a3fb">#721AE7</strong>), nunca com paletas novas.
+    </p>
+    <div class="source-pills">
+      <span class="source-pill">Adapta.org</span>
+      <span class="source-pill">Asimov Academy</span>
+      <span class="source-pill">Combo / Academy Skills</span>
+      <span class="source-pill">Reflect Notes</span>
+      <span class="source-pill">TRIONN</span>
+    </div>
+  </div>
+</header>
+
+<!-- ================= CORES ================= -->
+<section id="cores">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">01 · Cor</span>
+      <h2 class="section-title">Paleta</h2>
+      <p class="section-lede">Tokens diretos de <code>globals.css</code>. Clique em qualquer amostra para copiar o valor.</p>
+    </div>
+    <div class="swatch-grid" id="swatchGrid"></div>
+  </div>
+</section>
+
+<!-- ================= TIPOGRAFIA ================= -->
+<section id="tipografia">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">02 · Tipografia</span>
+      <h2 class="section-title">Aldrich para título, Albert Sans para texto</h2>
+      <p class="section-lede">O mesmo par de fontes carregado em <code>app/layout.tsx</code>. Aldrich fica reservada para títulos e destaques — nunca para parágrafos longos.</p>
+    </div>
+
+    <div class="type-row"><span class="type-sample" style="font-size:3.4rem;">Display 56/64</span><span class="type-meta">Aldrich · 400 · -0.01em</span></div>
+    <div class="type-row"><span class="type-sample" style="font-size:2.5rem;">Título H1 40</span><span class="type-meta">Aldrich · 400</span></div>
+    <div class="type-row"><span class="type-sample" style="font-size:2rem;">Título H2 32</span><span class="type-meta">Aldrich · 400</span></div>
+    <div class="type-row"><span class="type-sample" style="font-size:1.5rem;">Título H3 24</span><span class="type-meta">Aldrich · 400</span></div>
+    <div class="type-row"><span class="type-sample" style="font-size:1.25rem;">Título H4 20</span><span class="type-meta">Aldrich · 400</span></div>
+    <div class="type-row body"><span class="type-sample" style="font-size:1.125rem; font-weight:600;">Corpo grande 18</span><span class="type-meta">Albert Sans · 600</span></div>
+    <div class="type-row body"><span class="type-sample" style="font-size:1rem;">Corpo padrão 16</span><span class="type-meta">Albert Sans · 400</span></div>
+    <div class="type-row body"><span class="type-sample" style="font-size:.875rem; color:var(--muted-foreground);">Corpo pequeno 14</span><span class="type-meta">Albert Sans · 400</span></div>
+    <div class="type-row body"><span class="type-sample" style="font-size:.75rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--primary);">Eyebrow / rótulo</span><span class="type-meta">Albert Sans · 700 · tracking .18em</span></div>
+  </div>
+</section>
+
+<!-- ================= RAIO E ESPAÇO ================= -->
+<section id="escala">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">03 · Forma</span>
+      <h2 class="section-title">Raio e espaçamento</h2>
+      <p class="section-lede">Escala de <code>--radius</code> já definida em <code>globals.css</code> (múltiplos de 0.75rem), mais o raio total usado nos botões-pílula.</p>
+    </div>
+    <div class="token-strip" id="radiusStrip"></div>
+
+    <div class="section-head" style="margin-top:3rem;">
+      <h3 style="font-family:var(--font-heading); font-size:1.125rem;">Espaçamento base (4px)</h3>
+    </div>
+    <div class="space-strip" id="spaceStrip"></div>
+  </div>
+</section>
+
+<!-- ================= ELEVAÇÃO E VIDRO ================= -->
+<section id="elevacao">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">04 · Profundidade</span>
+      <h2 class="section-title">Elevação &amp; vidro</h2>
+      <p class="section-lede">Sombras escuras e sutis (nunca preto puro) inspiradas em Combo/Academy Skills e Reflect Notes; superfície translúcida com desfoque inspirada em Adapta.org e Reflect Notes.</p>
+    </div>
+    <div class="demo-grid">
+      <div class="demo-card shadow-sm">shadow-sm</div>
+      <div class="demo-card shadow-md">shadow-md</div>
+      <div class="demo-card shadow-lg">shadow-lg</div>
+      <div class="demo-card glass">glass · backdrop-blur(18px)</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GLOW / AURA ================= -->
+<section id="glow">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">05 · Luz</span>
+      <h2 class="section-title">Glow &amp; aura</h2>
+      <p class="section-lede">O halo de fundo por trás do herói (já implementado em <code>components/ui/lightfall.tsx</code>) segue o mesmo raciocínio do "aura background" da Asimov Academy e dos glows radiais da Adapta.org — aqui, recolorido só com verde e roxo da marca.</p>
+    </div>
+    <div class="demo-grid">
+      <div class="demo-card glow-primary">shadow-glow-primary</div>
+      <div class="demo-card glow-secondary">shadow-glow-secondary</div>
+      <div class="aura-stage">
+        <div class="aura-blob primary"></div>
+        <div class="aura-blob secondary"></div>
+        <span>aura de fundo · verde + roxo, blur(48px)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BOTÕES ================= -->
+<section id="botoes">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">06 · Ação</span>
+      <h2 class="section-title">Botões</h2>
+      <p class="section-lede">Botões de interface seguem <code>components/ui/button.tsx</code> (canto <code>--radius-lg</code>). Para CTAs de marketing, a variante "glow" — pílula com borda em gradiente giratório — resume em CSS puro o efeito já feito com WebGL em <code>specular-button.tsx</code>, e é o mesmo padrão visto nos botões da Asimov Academy e da Adapta.org.</p>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary">Quero ser aluno</button>
+      <button class="btn btn-secondary">Ver formações</button>
+      <button class="btn btn-outline">Saiba mais</button>
+      <button class="btn btn-ghost">Cancelar</button>
+      <button class="btn btn-destructive">Excluir</button>
+    </div>
+    <div class="btn-row" style="margin-top:1.5rem;">
+      <div class="btn-glow"><span>Quero ser aluno →</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BADGES ================= -->
+<section id="badges">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">07 · Rótulos</span>
+      <h2 class="section-title">Badges de trilha</h2>
+      <p class="section-lede">Mesmo truque de "uma cor por categoria" da Asimov Academy e das tags da Combo/Academy Skills — só que limitado à paleta da DevClub em vez de introduzir matizes novos.</p>
+    </div>
+    <div class="badge-row">
+      <span class="badge badge-primary"><span class="badge-dot"></span>Frontend</span>
+      <span class="badge badge-secondary"><span class="badge-dot"></span>Backend</span>
+      <span class="badge badge-gradient"><span class="badge-dot"></span>Full Stack</span>
+      <span class="badge badge-accent"><span class="badge-dot"></span>IA &amp; Automações</span>
+      <span class="badge badge-neutral"><span class="badge-dot"></span>Mobile</span>
+      <span class="badge badge-secondary"><span class="badge-dot"></span>Análise de Dados</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CARDS ================= -->
+<section id="cards">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">08 · Superfícies</span>
+      <h2 class="section-title">Cards</h2>
+      <p class="section-lede">Quatro variações: padrão, curso (barra + ícone colorido por trilha, como na Asimov Academy), spotlight (glow segue o cursor, como em Reflect Notes e Combo/Academy Skills) e depoimento (como o card "Depoimento" da Combo/Academy Skills).</p>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <h4>Card padrão</h4>
+        <p>Superfície base para conteúdo neutro — <code>var(--card)</code>, borda de 1px e <code>shadow-sm</code>.</p>
+      </div>
+
+      <div class="card course-card" style="--course-accent:var(--primary);">
+        <div class="course-icon">FE</div>
+        <h4>Programação Front End</h4>
+        <p>HTML, CSS, JavaScript e React do zero ao avançado.</p>
+        <span class="course-duration">40h · Formação completa</span>
+      </div>
+
+      <div class="card course-card" style="--course-accent:var(--secondary);">
+        <div class="course-icon">BE</div>
+        <h4>Programação Back End</h4>
+        <p>Node, bancos de dados e arquitetura de APIs.</p>
+        <span class="course-duration">36h · Formação completa</span>
+      </div>
+
+      <div class="card card-spotlight" data-spotlight>
+        <h4>Card spotlight</h4>
+        <p>Mova o cursor sobre este card: o brilho radial segue o mouse, no espírito dos cards da Reflect Notes.</p>
+      </div>
+
+      <div class="card card-testimonial">
+        <p class="quote">"Troquei de área e consegui minha primeira vaga em 6 meses."</p>
+        <div class="author">
+          <div class="avatar-dot">MC</div>
+          <div>
+            <div class="author-name">Mateus Costa</div>
+            <div class="author-role">Aluno DevClub</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MOTION ================= -->
+<section id="motion">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">09 · Movimento</span>
+      <h2 class="section-title">Padrões de interação</h2>
+      <p class="section-lede">Reveal escalonado (já usado no herói via GSAP + <code>[data-hero-item]</code>) e marquee infinito (já implementado em <code>components/ui/logo-loop.tsx</code>) — ambos inspirados na coreografia de entrada de texto e na faixa de logos da TRIONN. A TRIONN não tinha CSS de cor/raio recuperável (folhas de estilo externas ausentes do arquivo salvo), então ela contribuiu só com ideias de movimento e o par tipográfico grotesco + serifada ultraleve.</p>
+    </div>
+
+    <h3 style="font-family:var(--font-heading); font-size:1rem; margin-bottom:1rem;">Reveal escalonado</h3>
+    <p class="stagger-demo">
+      <span style="animation-delay:.05s">Torne-se</span>
+      <span style="animation-delay:.12s">profissional</span>
+      <span style="animation-delay:.19s">de</span>
+      <span style="animation-delay:.26s; color:var(--primary);">tecnologia.</span>
+    </p>
+
+    <h3 style="font-family:var(--font-heading); font-size:1rem; margin:2.5rem 0 1rem;">Marquee infinito</h3>
+    <div class="marquee">
+      <div class="marquee-track">
+        <span>Frontend</span><span>Backend</span><span>Full Stack</span><span>Mobile</span><span>IA &amp; Automações</span><span>Análise de Dados</span>
+        <span>Frontend</span><span>Backend</span><span>Full Stack</span><span>Mobile</span><span>IA &amp; Automações</span><span>Análise de Dados</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FONTES ================= -->
+<section id="fontes">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">10 · Referências</span>
+      <h2 class="section-title">O que veio de cada site</h2>
+      <p class="section-lede">Resumo honesto da extração — inclusive onde a fonte não tinha CSS recuperável.</p>
+    </div>
+    <div class="attrib-list">
+      <div class="attrib-item">
+        <span class="attrib-site">Adapta.org</span>
+        <span class="attrib-note">Botão pílula com sombra interna "glossy", cantos generosos (16–48px) e vidro (blur 10–16px) sobre fundo escuro esverdeado.</span>
+      </div>
+      <div class="attrib-item">
+        <span class="attrib-site">Asimov Academy</span>
+        <span class="attrib-note">Sistema de "uma cor por card" para categorias de curso, botão-pílula com borda em gradiente giratório e aura de fundo em tela cheia.</span>
+      </div>
+      <div class="attrib-item">
+        <span class="attrib-site">Combo / Academy Skills</span>
+        <span class="attrib-note">Cantos em squircle, sombras suaves em múltiplas camadas, cards de depoimento e tags em pílula.</span>
+      </div>
+      <div class="attrib-item">
+        <span class="attrib-site">Reflect Notes</span>
+        <span class="attrib-note">Nav flutuante em pílula com vidro, glow interno em botões e cards com spotlight que segue o cursor.</span>
+      </div>
+      <div class="attrib-item">
+        <span class="attrib-site">TRIONN</span>
+        <span class="attrib-note">CSS de cor/raio não recuperável (folhas de estilo externas ausentes). Contribuiu com o padrão de marquee e a ideia de reveal escalonado de texto.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">DevClub — Design System · gerado a partir de app/globals.css + docs/sites_references</div>
+</footer>
+
+<script>
+  // Amostras de cor geradas a partir dos tokens — clique para copiar.
+  var COLORS = [
+    ["Background", "--background"],
+    ["Foreground", "--foreground"],
+    ["Card", "--card"],
+    ["Primary (verde)", "--primary"],
+    ["Primary foreground", "--primary-foreground"],
+    ["Secondary (roxo)", "--secondary"],
+    ["Secondary foreground", "--secondary-foreground"],
+    ["Muted", "--muted"],
+    ["Muted foreground", "--muted-foreground"],
+    ["Accent", "--accent"],
+    ["Accent foreground", "--accent-foreground"],
+    ["Destructive", "--destructive"],
+    ["Border", "--border"],
+    ["Ring", "--ring"]
+  ];
+  var grid = document.getElementById("swatchGrid");
+  var rootStyles = getComputedStyle(document.documentElement);
+  COLORS.forEach(function (c) {
+    var name = c[0], varName = c[1];
+    var value = rootStyles.getPropertyValue(varName).trim();
+    var btn = document.createElement("button");
+    btn.className = "swatch";
+    btn.innerHTML =
+      '<div class="swatch-fill" style="background:var(' + varName + ')"></div>' +
+      '<div class="swatch-meta"><div class="swatch-name">' + name + '</div><div class="swatch-var mono">' + value + "</div></div>";
+    btn.addEventListener("click", function () {
+      var meta = btn.querySelector(".swatch-var");
+      var original = value;
+      if (navigator.clipboard) navigator.clipboard.writeText(value).catch(function () {});
+      meta.textContent = "copiado!";
+      meta.classList.add("swatch-copied");
+      setTimeout(function () {
+        meta.textContent = original;
+        meta.classList.remove("swatch-copied");
+      }, 900);
+    });
+    grid.appendChild(btn);
+  });
+
+  var RADII = [
+    ["sm", "--radius-sm"], ["md", "--radius-md"], ["lg", "--radius-lg"],
+    ["xl", "--radius-xl"], ["2xl", "--radius-2xl"], ["3xl", "--radius-3xl"],
+    ["4xl", "--radius-4xl"], ["full", "--radius-full"]
+  ];
+  var radiusStrip = document.getElementById("radiusStrip");
+  RADII.forEach(function (r) {
+    var wrap = document.createElement("div");
+    var box = document.createElement("div");
+    box.className = "token-box";
+    box.style.borderRadius = "var(" + r[1] + ")";
+    var label = document.createElement("div");
+    label.className = "token-box-label";
+    label.textContent = "--radius-" + r[0];
+    wrap.appendChild(box);
+    wrap.appendChild(label);
+    radiusStrip.appendChild(wrap);
+  });
+
+  var SPACES = [4, 8, 12, 16, 24, 32, 48, 64];
+  var spaceStrip = document.getElementById("spaceStrip");
+  SPACES.forEach(function (px) {
+    var bar = document.createElement("div");
+    bar.className = "space-bar";
+    bar.style.height = px + "px";
+    bar.title = px + "px";
+    spaceStrip.appendChild(bar);
+  });
+
+  // Spotlight — brilho radial acompanha o cursor dentro do card.
+  document.querySelectorAll("[data-spotlight]").forEach(function (card) {
+    card.addEventListener("mousemove", function (e) {
+      var rect = card.getBoundingClientRect();
+      card.style.setProperty("--x", (e.clientX - rect.left) + "px");
+      card.style.setProperty("--y", (e.clientY - rect.top) + "px");
+    });
+  });
+</script>
+</body>
+</html>
