@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/layout/navbar";
 import { Hero } from "@/components/sections/home/hero";
+import { LaptopScroll } from "@/components/sections/home/laptop-scroll";
 import { Formacoes } from "@/components/sections/home/formacoes";
 import { Tecnologias } from "@/components/sections/home/tecnologias";
 import { AlemDoCodigo } from "@/components/sections/home/alem-do-codigo";
@@ -13,6 +14,7 @@ export default function Home() {
       <Navbar />
       <main className="flex flex-1 flex-col">
         <Hero />
+        <LaptopScroll />
         <Formacoes />
         <Tecnologias />
         <AlemDoCodigo />
