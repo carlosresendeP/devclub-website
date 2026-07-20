@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { RotatingText } from "@/components/ui/rotating-text";
 import { SpecularButton } from "@/components/ui/specular-button";
-import { StarField } from "@/components/ui/star-field";
 import { CountStat } from "@/components/shared/count-stat";
 import { LogoMarquee } from "@/components/shared/logo-marquee";
 
@@ -24,11 +23,10 @@ const PARTNER_LOGOS = [
   { src: "/logos/google-logo-transparent.png", alt: "Google" },
 ];
 
+// Fundo transparente: o céu de estrelas vem do canvas global no layout.
 export function Hero() {
   return (
-    <section className="relative h-dvh w-full overflow-hidden bg-background">
-      <StarField className="absolute inset-0 h-full w-full" />
-
+    <section className="relative h-dvh w-full overflow-hidden">
       <div className="hero-vignette pointer-events-none absolute inset-0" />
 
       <div className="absolute inset-0 z-10 flex flex-col items-center px-4 pt-24 pb-8 text-center motion-safe:animate-[reveal-up_0.7s_ease-out] sm:px-6 sm:pb-10">

@@ -16,7 +16,7 @@ const FEATURES = [
 
 export function Plataforma() {
   return (
-    <section id="plataforma" className="relative overflow-hidden py-24 bg-background">
+    <section id="plataforma" className="relative overflow-hidden py-24">
       <div
         aria-hidden
         className="pointer-events-none absolute -left-32 top-1/2 -z-10 size-128 -translate-y-1/2 rounded-full bg-gradient-brand-soft blur-3xl"
