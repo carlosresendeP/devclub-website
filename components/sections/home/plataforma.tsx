@@ -1,79 +1,59 @@
 import Image from "next/image";
 import { Check } from "lucide-react";
 
-import { SectionHeading } from "@/components/shared/section-heading";
-import { ScrollReveal } from "@/components/ui/scroll-reveal";
-import { TiltedCard } from "@/components/ui/tilted-card";
+import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 
 const FEATURES = [
   "Plataforma de Ensino",
-  "Cursos Organizados por Trilhas e Formações",
+  "Cursos por Trilhas e Formações",
   "Comunidade de alunos",
   "Club Agents",
   "Playground de Treinamento",
-  "Mural da Fama dos Alunos Destaques",
+  "Mural da Fama dos Destaques",
 ];
 
 export function Plataforma() {
   return (
-    <section id="plataforma" className="relative overflow-hidden py-24">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -left-32 top-1/2 -z-10 size-128 -translate-y-1/2 rounded-full bg-gradient-brand-soft blur-3xl"
-      />
-
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
-          <ScrollReveal className="flex flex-col gap-8">
-            <SectionHeading
-              eyebrow="Plataforma"
-              title={
-                <>
-                  Você terá acesso a uma{" "}
-                  <span className="text-primary">plataforma moderna</span> de
-                  aulas, comunidade e vagas, com{" "}
-                  <span className="text-secondary">IAs para acelerar</span>{" "}
-                  seu progresso
-                </>
-              }
-              lede="Tudo com suporte dos professores, do primeiro login até a sua primeira vaga."
-            />
-
-            <ul className="flex flex-col gap-3">
-              {FEATURES.map((feature) => (
-                <li key={feature} className="flex items-center gap-3">
-                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                    <Check className="size-3.5" />
-                  </span>
-                  <span className="text-sm text-foreground sm:text-base">
-                    {feature}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </ScrollReveal>
-
-          <ScrollReveal
-            delayMs={120}
-            className="relative perspective-distant"
-          >
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -right-10 -top-10 size-64 rounded-full bg-primary/20 blur-3xl"
-            />
-
-            <TiltedCard className="relative overflow-hidden">
-              <Image
-                src="/notebook-plataform.webp"
-                alt="Plataforma DevClub — trilhas, comunidade e progresso do aluno"
-                width={1503}
-                height={1080}
-                sizes="(min-width: 1024px) 560px, 100vw"
-                className="h-auto w-full object-contain shadow-2xl shadow-primary"
-              />
-            </TiltedCard>
-          </ScrollReveal>
+    <section id="plataforma" className="relative overflow-hidden">
+      <ContainerScroll
+        titleComponent={
+          <div className="flex flex-col items-center gap-5 px-4">
+            <span className="font-heading text-[11px] uppercase tracking-[0.2em] text-primary">
+              plataforma_
+            </span>
+            <h2 className="max-w-3xl font-heading text-4xl font-light leading-[1.05] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+              Uma plataforma moderna para{" "}
+              <span className="text-gradient-brand">acelerar</span> seu progresso
+            </h2>
+            <p className="max-w-xl text-base text-muted-foreground sm:text-lg">
+              Aulas, comunidade, área de vagas e IAs para acelerar cada etapa —
+              tudo com o suporte dos professores, do primeiro login até a sua vaga.
+            </p>
+          </div>
+        }
+      >
+        <div className="relative size-full">
+          <Image
+            src="/print-plataforma.webp"
+            alt="Plataforma DevClub — trilhas, comunidade e progresso do aluno"
+            fill
+            sizes="(min-width: 1024px) 1000px, 100vw"
+            className="rounded-xl object-cover object-top"
+            priority
+          />
         </div>
+      </ContainerScroll>
+
+      <div className="mx-auto -mt-8 flex max-w-4xl flex-wrap items-center justify-center gap-3 px-4 pb-24 sm:px-6 lg:px-8">
+        {FEATURES.map((feature) => (
+          <span
+            key={feature}
+            className="inline-flex items-center gap-2 rounded-full border border-border glass-surface px-4 py-2 text-sm text-foreground/80"
+          >
+            <Check className="size-3.5 text-primary" />
+            {feature}
+          </span>
+        ))}
       </div>
     </section>
   );

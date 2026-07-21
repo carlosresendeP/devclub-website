@@ -1,4 +1,3 @@
-import Link from "next/link";
 import {
   SiReact,
   SiNodedotjs,
@@ -7,159 +6,105 @@ import {
   SiHtml5,
   SiPostgresql,
   SiN8N,
+  SiPython,
+  SiDocker,
+  SiGit,
+  SiTailwindcss,
+  SiNextdotjs,
+  SiMongodb,
+  SiGraphql,
 } from "react-icons/si";
 import { DiCss3 } from "react-icons/di";
-import { BarChart3 } from "lucide-react";
 
-import { BackgroundBeams } from "@/components/ui/background-beams";
 import { DecryptedText } from "@/components/ui/decrypted-text";
-import { ScrollReveal } from "@/components/ui/scroll-reveal";
-import { SpecularButton } from "@/components/ui/specular-button";
-import { SectionHeading } from "@/components/shared/section-heading";
+import { CursorSpotlight } from "@/components/ui/cursor-spotlight";
 
-interface Tech {
+interface TechChip {
   name: string;
-  Icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
-  color: string;
+  Icon: React.ComponentType<{ className?: string }>;
 }
 
-const STACKS: { label: string; techs: Tech[] }[] = [
-  {
-    label: "Front End",
-    techs: [
-      { name: "HTML5", Icon: SiHtml5, color: "#e34f26" },
-      { name: "CSS3", Icon: DiCss3, color: "#2965f1" },
-      { name: "JavaScript", Icon: SiJavascript, color: "#f0db4f" },
-      { name: "TypeScript", Icon: SiTypescript, color: "#3178c6" },
-      { name: "React", Icon: SiReact, color: "#61dafb" },
-    ],
-  },
-  {
-    label: "Back End",
-    techs: [
-      { name: "Node.js", Icon: SiNodedotjs, color: "#3c873a" },
-      { name: "PostgreSQL", Icon: SiPostgresql, color: "#4169e1" },
-    ],
-  },
-  {
-    label: "Dados e Automações",
-    techs: [
-      { name: "Power BI", Icon: BarChart3, color: "#f2c811" },
-      { name: "N8N", Icon: SiN8N, color: "#ea4b71" },
-    ],
-  },
+const ROW_A: TechChip[] = [
+  { name: "HTML5", Icon: SiHtml5 },
+  { name: "CSS3", Icon: DiCss3 },
+  { name: "JavaScript", Icon: SiJavascript },
+  { name: "TypeScript", Icon: SiTypescript },
+  { name: "React", Icon: SiReact },
+  { name: "Next.js", Icon: SiNextdotjs },
+  { name: "Tailwind", Icon: SiTailwindcss },
 ];
+
+const ROW_B: TechChip[] = [
+  { name: "Node.js", Icon: SiNodedotjs },
+  { name: "PostgreSQL", Icon: SiPostgresql },
+  { name: "MongoDB", Icon: SiMongodb },
+  { name: "Docker", Icon: SiDocker },
+  { name: "Git", Icon: SiGit },
+  { name: "Python", Icon: SiPython },
+];
+
+const ROW_C: TechChip[] = [
+  { name: "N8N", Icon: SiN8N },
+  { name: "GraphQL", Icon: SiGraphql },
+  { name: "React", Icon: SiReact },
+  { name: "TypeScript", Icon: SiTypescript },
+  { name: "Node.js", Icon: SiNodedotjs },
+  { name: "Python", Icon: SiPython },
+];
+
+function MarqueeRow({
+  items,
+  reverse,
+  duration,
+}: {
+  items: TechChip[];
+  reverse?: boolean;
+  duration: string;
+}) {
+  const track = [...items, ...items];
+  return (
+    <div className="mask-fade-x relative w-full overflow-hidden">
+      <div
+        className="flex w-max items-center gap-3 animate-marquee"
+        style={{
+          "--marquee-duration": duration,
+          animationDirection: reverse ? "reverse" : "normal",
+        } as React.CSSProperties}
+      >
+        {track.map(({ name, Icon }, index) => (
+          <span
+            key={`${name}-${index}`}
+            className="group flex shrink-0 items-center gap-2.5 rounded-full border border-border glass-surface px-5 py-2.5 text-muted-foreground transition-colors duration-300 hover:border-primary/40 hover:text-foreground"
+          >
+            <Icon className="size-5 transition-colors duration-300 group-hover:text-primary" />
+            <span className="text-sm font-medium">{name}</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export function Tecnologias() {
   return (
-    <section id="tecnologias" className="relative overflow-hidden py-24">
-      <BackgroundBeams className="-z-10" />
+    <section id="tecnologias" className="relative overflow-hidden py-24 sm:py-32">
+      <CursorSpotlight className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 text-center sm:px-6">
+        <span className="font-heading text-[11px] uppercase tracking-[0.2em] text-primary">
+          tecnologias_
+        </span>
+        <h2 className="max-w-3xl font-heading text-4xl font-light leading-[1.05] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+          <DecryptedText text="Aprenda as PRINCIPAIS tecnologias do mercado" />
+        </h2>
+        <p className="max-w-xl text-base text-muted-foreground sm:text-lg">
+          Do zero, de forma didática, com os melhores profissionais do mercado —
+          a trilha te leva até o primeiro emprego na prática.
+        </p>
+      </CursorSpotlight>
 
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-40 top-1/3 -z-10 size-128 rounded-full bg-gradient-brand-soft blur-3xl"
-      />
-
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
-          <ScrollReveal className="flex flex-col gap-8">
-            <SectionHeading
-              eyebrow="Tecnologias"
-              title={
-                <DecryptedText text="Aprenda as PRINCIPAIS tecnologias do mercado" />
-              }
-              lede="Do zero, de forma didática, com os melhores profissionais do mercado — a trilha te leva até o primeiro emprego na prática."
-            />
-
-            <div className="flex flex-wrap gap-x-10 gap-y-4">
-              <div className="flex flex-col">
-                <span className="text-2xl font-semibold text-foreground">
-                  9 tecnologias
-                </span>
-                <span className="text-sm text-muted-foreground">
-                  do front ao back, dados e automações
-                </span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-2xl font-semibold text-foreground">
-                  100% na prática
-                </span>
-                <span className="text-sm text-muted-foreground">
-                  projetos reais desde a primeira aula
-                </span>
-              </div>
-            </div>
-
-            <span className="h-1 w-10 rounded-full bg-secondary" />
-
-            <SpecularButton
-              size="lg"
-              render={<Link href="#matricula" />}
-              nativeButton={false}
-              className="w-fit"
-            >
-              Quero Fazer Parte
-            </SpecularButton>
-          </ScrollReveal>
-
-          <ScrollReveal
-            delayMs={120}
-            className="relative rounded-3xl border bg-card/60 p-5 shadow-lg backdrop-blur-sm sm:p-7"
-          >
-            <div className="flex items-center gap-3 border-b pb-4">
-              <span className="flex gap-1.5">
-                <span className="size-2.5 rounded-full bg-destructive/70" />
-                <span className="size-2.5 rounded-full bg-[#f2c811]/70" />
-                <span className="size-2.5 rounded-full bg-primary/70" />
-              </span>
-              <span className="font-mono text-[11px] tracking-wide text-muted-foreground">
-                stack_devclub
-              </span>
-            </div>
-
-            <div className="mt-6 flex flex-col gap-7">
-              {STACKS.map(({ label, techs }) => (
-                <div key={label} className="flex flex-col gap-3">
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-primary">
-                      {label}
-                    </span>
-                    <span className="h-px flex-1 bg-border" />
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
-                    {techs.map(({ name, Icon, color }) => (
-                      <div
-                        key={name}
-                        className="group flex items-center gap-3 rounded-xl border bg-background/40 p-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
-                      >
-                        <span
-                          className="flex size-9 shrink-0 items-center justify-center rounded-lg"
-                          style={{ backgroundColor: `${color}1a` }}
-                        >
-                          <Icon
-                            className="size-5 transition-transform duration-300 group-hover:scale-110"
-                            style={{ color }}
-                          />
-                        </span>
-                        <span className="truncate text-sm font-medium text-foreground">
-                          {name}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <p className="mt-7 border-t pt-5 text-sm text-muted-foreground">
-              Você não precisa saber programar hoje.{" "}
-              <span className="font-semibold text-foreground">
-                Começamos do absoluto zero.
-              </span>
-            </p>
-          </ScrollReveal>
-        </div>
+      <div className="mt-16 flex flex-col gap-4">
+        <MarqueeRow items={ROW_A} duration="34s" />
+        <MarqueeRow items={ROW_B} duration="28s" reverse />
+        <MarqueeRow items={ROW_C} duration="40s" />
       </div>
     </section>
   );
