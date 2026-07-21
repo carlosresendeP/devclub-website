@@ -115,10 +115,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col items-start justify-between gap-4 border-t border-border py-6 text-xs text-muted-foreground sm:flex-row sm:items-center">
-          <p>© {new Date().getFullYear()} DevClub. Todos os direitos reservados.</p>
-          <p>Escola reconhecida pelo MEC · Diploma com validade nacional.</p>
-        </div>
+
       </div>
     </footer>
   );

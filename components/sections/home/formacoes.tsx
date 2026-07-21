@@ -12,39 +12,42 @@ interface Formacao {
   name: string;
   spec: string;
   img: string;
+  wide?: boolean;
 }
 
 const FORMACOES: Formacao[] = [
-  { name: "Front End", spec: "html · css · javascript", img: "/cards-fomacoes/image_44_1x.webp" },
+  { name: "Inicio do zero", spec: "programção para iniciantes", img: "/cards-fomacoes/image_44_1x.webp" },
+  { name: "Html", spec: "html basico ao avançado", img: "/cards-fomacoes/image_45_1x.webp" },
+  { name: "Css", spec: "do básico ao avançado", img: "/cards-fomacoes/image_46_1x.webp" },
+  { name: "JavaScript Completo", spec: "do básico ao avançado", img: "/cards-fomacoes/image_47_1x.webp" },
+  { name: "Typescript", spec: "completo", img: "/cards-fomacoes/image_50_1x.webp" },
   { name: "Back End", spec: "node · apis · banco de dados", img: "/cards-fomacoes/image_49_1x.webp" },
-  { name: "Full Stack", spec: "front + back integrados", img: "/cards-fomacoes/card-largo-1.webp" },
-  { name: "Programação Mobile", spec: "apps nativos e híbridos", img: "/cards-fomacoes/image_45_1x.webp" },
-  { name: "React", spec: "componentes · hooks · SPA", img: "/cards-fomacoes/image_47_1x.webp" },
-  { name: "Node", spec: "servidores · rest · auth", img: "/cards-fomacoes/image_50_1x.webp" },
-  { name: "JavaScript Completo", spec: "do básico ao avançado", img: "/cards-fomacoes/image_46_1x.webp" },
-  { name: "HTML5 & CSS3", spec: "layouts responsivos", img: "/cards-fomacoes/image_48_1x.webp" },
-  { name: "Gestor de IA", spec: "estratégia com IA", img: "/cards-fomacoes/card-largo-2.webp" },
-  { name: "IA & Automações", spec: "fluxos inteligentes", img: "/cards-fomacoes/image_51_1x.webp" },
+  { name: "Full Stack", spec: "front + back integrados", img: "/cards-fomacoes/card-largo-1.webp", wide: true },
+  { name: "Carreira Dev", spec: "Como de posicionar no mercado", img: "/cards-fomacoes/image_48_1x.webp" },
+  { name: "Gestor de IA", spec: "estratégia com IA", img: "/cards-fomacoes/card-largo-2.webp", wide: true },
+  { name: "Engenharia de Prompts", spec: "fluxos inteligentes", img: "/cards-fomacoes/image_51_1x.webp" },
   { name: "Claude & ClaudeCode", spec: "agentes de código", img: "/cards-fomacoes/image_52_1x.webp" },
-  { name: "Aceleração para sua Carreira", spec: "Carreira", img: "/formacoes_extras/ace_1_1x.webp" },
-  { name: "Análise de Dados", spec: "sql · pandas · insights", img: "/cards-fomacoes/card-largo-3.webp" },
-  { name: "Power BI", spec: "dashboards executivos", img: "/formacoes_extras/projetos_1_1x.webp" },
-  { name: "MBA em IA", spec: "gestão · estratégia", img: "/cards-fomacoes/card-largo-4.webp" },
+  { name: "Análise de Dados", spec: "sql · pandas · insights", img: "/cards-fomacoes/card-largo-3.webp", wide: true },
+  { name: "Power BI", spec: "dashboards executivos", img: "/cards-fomacoes/image.png" },
+  { name: "MBA em IA", spec: "gestão · estratégia", img: "/cards-fomacoes/card-largo-4.webp", wide: true },
 ];
 
 function Card({ formacao, index }: { formacao: Formacao; index: number }) {
   return (
     <Link
       href="#matricula"
-      className="group relative flex h-88 w-72 shrink-0 overflow-hidden rounded-3xl border border-border transition-colors duration-300 hover:border-primary/50 md:h-96 md:w-80"
+      className={cn(
+        "group relative flex h-72 shrink-0 overflow-hidden rounded-3xl border border-border transition-colors duration-300 hover:border-primary/50 md:h-80",
+        formacao.wide ? "w-104 md:w-136" : "w-56 md:w-64"
+      )}
     >
       {/* imagem full */}
       <Image
         src={formacao.img}
         alt={formacao.name}
         fill
-        sizes="420px"
-        className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+        sizes={formacao.wide ? "(min-width: 768px) 34rem, 26rem" : "(min-width: 768px) 256px, 224px"}
+        className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
       />
 
       {/* gradiente inferior */}
@@ -100,9 +103,9 @@ export function Formacoes() {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"],
+    offset: ["start start","end 10%"],
   });
-  const x = useTransform(scrollYProgress, [0, 1], [0, -maxScroll]);
+  const x = useTransform(scrollYProgress, [0.12, 0.92], [0, -maxScroll]);
 
   useEffect(() => {
     const measure = () => {
@@ -126,7 +129,10 @@ export function Formacoes() {
     <section
       ref={containerRef}
       id="formacoes"
-      className={cn("relative scroll-mt-24 h-full", enabled ? "h-[320vh] pt-24" : "py-24")}
+      className={cn(
+        "relative scroll-mt-24 h-full overflow-x-clip",
+        enabled ? "h-[420vh] pt-24" : "py-24"
+      )}
     >
       <div
         className={cn(

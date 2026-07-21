@@ -1,84 +1,14 @@
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Quote } from "lucide-react";
+import { ArrowUpRight, Play, Quote } from "lucide-react";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { SectionHeading } from "@/components/shared/section-heading";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
+import { DEPOIMENTOS, type Depoimento } from "@/lib/depoimentos";
 
 const STARS_URL = "https://stars.devclub.com.br/#historias";
-
-interface Depoimento {
-  name: string;
-  role: string;
-  initials: string;
-  quote: string;
-}
-
-const DEPOIMENTOS: Depoimento[] = [
-  {
-    name: "Bruno Barbosa",
-    role: "Formação Full Stack",
-    initials: "BB",
-    quote:
-      "Fui demitido logo depois de entrar e usei isso pra focar 100%. Ainda não terminei a formação e o emprego já veio.",
-  },
-  {
-    name: "Yasmim Aparecida",
-    role: "Full Stack Jr.",
-    initials: "YA",
-    quote:
-      "Com menos de 3 meses passei na primeira entrevista, sem teste técnico. Os projetos do curso no meu GitHub fizeram a diferença.",
-  },
-  {
-    name: "Beatriz Pereira",
-    role: "Desenvolvedora Mobile",
-    initials: "BP",
-    quote:
-      "Me candidatei a mais de 700 vagas até conseguir. O DevClub me deu toda a base — tecnologia, entrevistas e autoconfiança.",
-  },
-  {
-    name: "Leonardo Moraes",
-    role: "Front End",
-    initials: "LM",
-    quote:
-      "Cheguei a parar por questões pessoais, mas voltei. Na primeira entrevista depois disso eu recebi o meu sim.",
-  },
-  {
-    name: "Anderson Santos",
-    role: "Back End",
-    initials: "AS",
-    quote:
-      "Pedi demissão depois de 4 anos e entrei no DevClub. A base me permitiu passar no teste técnico e conquistar a vaga.",
-  },
-  {
-    name: "Italo Rafael",
-    role: "Acelerador de Carreira",
-    initials: "IR",
-    quote:
-      "Depois das mentorias com o RH comecei a ser chamado. Hoje sou responsável pela área de TI de uma empresa.",
-  },
-  {
-    name: "Camila Duarte",
-    role: "Analista de Dados",
-    initials: "CD",
-    quote:
-      "Troquei de área com quase 35 anos. As trilhas de dados e o Power BI me colocaram num nível que eu não imaginava alcançar.",
-  },
-  {
-    name: "Rafael Nunes",
-    role: "Dev Full Stack",
-    initials: "RN",
-    quote:
-      "O suporte 7 dias por semana me tirou de vários travamentos. Nunca me senti sozinho durante o aprendizado.",
-  },
-  {
-    name: "Juliana Alves",
-    role: "Especialista em IA",
-    initials: "JA",
-    quote:
-      "Os Agentes de IA e as automações mudaram minha produtividade. Entreguei projetos que impressionaram na entrevista.",
-  },
-];
 
 const COLUMNS = [
   [DEPOIMENTOS[0], DEPOIMENTOS[3], DEPOIMENTOS[6]],
@@ -95,13 +25,80 @@ function DepoimentoCard({ item }: { item: Depoimento }) {
       </p>
       <div className="flex items-center gap-3 pt-1">
         <Avatar size="sm">
-          <AvatarFallback className="bg-gradient-brand text-[11px] font-semibold text-foreground">
+          <AvatarFallback className="bg-gradient-brand text-sm font-semibold text-foreground">
             {item.initials}
           </AvatarFallback>
         </Avatar>
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold text-foreground">{item.name}</p>
           <p className="truncate text-xs text-muted-foreground">{item.role}</p>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function DepoimentoMosaicCard({ item }: { item: Depoimento }) {
+  return (
+    <article className="mb-4 flex break-inside-avoid flex-col gap-4 rounded-2xl border border-border bg-card/60 p-5 backdrop-blur-sm sm:flex-row sm:items-stretch">
+      <div className="flex flex-1 flex-col gap-4">
+        <Quote className="size-5 text-primary/60" />
+        <p className="text-sm leading-relaxed text-foreground/90">
+          &ldquo;{item.quote}&rdquo;
+        </p>
+        <div className="mt-auto flex items-center gap-3">
+          <Avatar size="sm">
+            <AvatarImage src={item.photo} alt={item.name} />
+            <AvatarFallback className="bg-gradient-brand text-[11px] font-semibold text-foreground">
+              {item.initials}
+            </AvatarFallback>
+          </Avatar>
+          <div className="min-w-0">
+            <p className="truncate text-sm font-semibold text-foreground">{item.name}</p>
+            <p className="truncate text-xs text-muted-foreground">{item.role}</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="relative h-40 w-full shrink-0 overflow-hidden rounded-xl sm:h-auto sm:w-40">
+        <Image
+          src={item.photo}
+          alt=""
+          aria-hidden
+          fill
+          sizes="(min-width: 640px) 160px, 100vw"
+          className="object-cover"
+        />
+        <span
+          aria-hidden
+          className="absolute inset-0 flex items-center justify-center bg-black/20"
+        >
+          <span className="flex size-10 items-center justify-center rounded-full bg-primary shadow-glow-primary">
+            <Play className="size-4 fill-background text-background" />
+          </span>
+        </span>
+      </div>
+    </article>
+  );
+}
+
+function DepoimentoListCard({ item }: { item: Depoimento }) {
+  return (
+    <article className="flex flex-col gap-5 rounded-2xl border border-border bg-card/60 p-8 backdrop-blur-sm sm:flex-row sm:items-center sm:gap-8">
+      <Avatar size="lg" className="shrink-0">
+        <AvatarImage src={item.photo} alt={item.name} />
+        <AvatarFallback className="bg-gradient-brand text-sm font-semibold text-foreground">
+          {item.initials}
+        </AvatarFallback>
+      </Avatar>
+      <div className="flex flex-col gap-3">
+        <Quote className="size-6 text-primary/60" />
+        <p className="text-base leading-relaxed text-foreground/90 sm:text-lg">
+          &ldquo;{item.quote}&rdquo;
+        </p>
+        <div>
+          <p className="text-sm font-semibold text-foreground">{item.name}</p>
+          <p className="text-xs text-muted-foreground">{item.role}</p>
         </div>
       </div>
     </article>
@@ -155,11 +152,37 @@ export function Depoimentos() {
           className="mx-auto"
         />
 
-        <div className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <DepoimentoColumn items={COLUMNS[0]} duration="34s" />
-          <DepoimentoColumn items={COLUMNS[1]} duration="42s" reverse />
-          <DepoimentoColumn items={COLUMNS[2]} duration="38s" className="hidden lg:block" />
-        </div>
+        <Tabs defaultValue="grade" className="mt-16">
+          <TabsList className="mx-auto">
+            <TabsTrigger value="grade">Grade</TabsTrigger>
+            <TabsTrigger value="mosaico">Mosaico</TabsTrigger>
+            <TabsTrigger value="lista">Lista</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="grade" className="mt-10">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <DepoimentoColumn items={COLUMNS[0]} duration="34s" />
+              <DepoimentoColumn items={COLUMNS[1]} duration="42s" reverse />
+              <DepoimentoColumn items={COLUMNS[2]} duration="38s" className="hidden lg:block" />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="mosaico" className="mt-10">
+            <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
+              {DEPOIMENTOS.map((item) => (
+                <DepoimentoMosaicCard key={item.name} item={item} />
+              ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="lista" className="mt-10">
+            <div className="mx-auto flex max-w-4xl flex-col gap-4">
+              {DEPOIMENTOS.map((item) => (
+                <DepoimentoListCard key={item.name} item={item} />
+              ))}
+            </div>
+          </TabsContent>
+        </Tabs>
 
         <div className="mt-14 flex justify-center">
           <Link

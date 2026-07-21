@@ -8,6 +8,8 @@ import { ArrowUpRight, Play } from "lucide-react";
 import { CountStat } from "@/components/shared/count-stat";
 import { LogoMarquee } from "@/components/shared/logo-marquee";
 import { FilmGrain } from "@/components/ui/film-grain";
+import { StarField } from "@/components/ui/star-field";
+import { RotatingText } from "@/components/ui/rotating-text";
 
 const EMPRESAS = [
   { src: "/logos/ifood-logo-png_seeklogo-463141.png", alt: "iFood" },
@@ -19,13 +21,29 @@ const EMPRESAS = [
 ];
 
 const AVATARES = [
-  { src: "/professores/Rodolfo Mori.webp", alt: "Aluno DevClub", fallback: "RM" },
-  { src: "/professores/Henrique.webp", alt: "Aluno DevClub", fallback: "HE" },
-  { src: "/professores/Agustinho.webp", alt: "Aluno DevClub", fallback: "AG" },
-  { src: "/professores/Fernanda - Carreira.webp", alt: "Aluna DevClub", fallback: "FE" },
+  {
+    src: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&auto=format&fit=crop&crop=faces",
+    alt: "Aluno DevClub",
+    fallback: "RM",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&auto=format&fit=crop&crop=faces",
+    alt: "Aluno DevClub",
+    fallback: "HE",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?q=80&w=200&auto=format&fit=crop&crop=faces",
+    alt: "Aluno DevClub",
+    fallback: "AG",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop&crop=faces",
+    alt: "Aluna DevClub",
+    fallback: "FE",
+  },
 ];
 
-const HEADLINE = "Torne-se o dev que o mercado disputa";
+const HEADLINE = "Transforme sua carreira com Programação, IA, Dados e Automações";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24, filter: "blur(10px)" },
@@ -52,23 +70,14 @@ export function Hero() {
     <section
       id="inicio"
       onPointerMove={handlePointerMove}
-      className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-4 pt-28 pb-16 text-center sm:px-6"
+      className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-4 pt-28 pb-16 text-center sm:px-6 "
     >
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <video
-          className="size-full object-cover opacity-20 mask-fade-b"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-        >
-          <source src="/video_hero.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-background/50" />
+        <StarField className="absolute inset-0 size-full mask-fade-b" />
+        {/* <div className="absolute inset-0 bg-background/50" /> */}
       </div>
 
-      <FilmGrain className="opacity-40" />
+      {/* <FilmGrain className="opacity-40" /> */}
 
       <div className="relative z-10 flex w-full max-w-5xl flex-col items-center gap-7">
         <motion.span
@@ -91,15 +100,44 @@ export function Hero() {
           className="relative text-3xl font-light leading-[0.95] tracking-tight sm:text-5xl lg:text-6xl"
           aria-label={HEADLINE}
         >
-          <span aria-hidden className="text-foreground/15">
-            Torne-se o dev
+          <span aria-hidden className="text-foreground/80">
+            Transforme sua
             <br />
-            que o mercado <span className="italic">disputa</span>
+            carreira com{" "}
+            <RotatingText
+              words={["Programação", "IA", "Dados", "Automações"]}
+              staggerFrom="last"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "-120%" }}
+              staggerDuration={0.025}
+              splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+              transition={{ type: "spring", damping: 30, stiffness: 400 }}
+              rotationInterval={3000}
+              splitBy="characters"
+              auto
+              loop
+              className="italic"
+            />
           </span>
           <span aria-hidden className="spotlight-text absolute inset-0">
-            Torne-se o dev
+            Transforme sua
             <br />
-            que o mercado <span className="italic">disputa</span>
+            carreira com{" "}
+            <RotatingText
+              words={["Programação", "IA", "Dados", "Automações"]}
+              staggerFrom="last"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "-120%" }}
+              staggerDuration={0.025}
+              splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+              transition={{ type: "spring", damping: 30, stiffness: 400 }}
+              rotationInterval={3000}
+              splitBy="characters"
+              auto
+              loop
+            />
           </span>
         </motion.h1>
 
@@ -110,7 +148,7 @@ export function Hero() {
           animate="show"
           className="max-w-xl text-balance text-base text-muted-foreground sm:text-lg"
         >
-          Programação, Gestão de IA, automações e análise de dados — do zero ao
+          Programação, Gestão de IA, automações e análise de dados do zero ao
           avançado, com mentoria semanal e uma comunidade que não te deixa parar.
         </motion.p>
 
