@@ -26,7 +26,7 @@ const FORMACOES: Formacao[] = [
   { name: "Gestor de IA", spec: "estratégia com IA", img: "/cards-fomacoes/card-largo-2.webp" },
   { name: "IA & Automações", spec: "fluxos inteligentes", img: "/cards-fomacoes/image_51_1x.webp" },
   { name: "Claude & ClaudeCode", spec: "agentes de código", img: "/cards-fomacoes/image_52_1x.webp" },
-  { name: "Trilha N8N", spec: "automação visual", img: "/formacoes_extras/ace_1_1x.webp" },
+  { name: "Aceleração para sua Carreira", spec: "Carreira", img: "/formacoes_extras/ace_1_1x.webp" },
   { name: "Análise de Dados", spec: "sql · pandas · insights", img: "/cards-fomacoes/card-largo-3.webp" },
   { name: "Power BI", spec: "dashboards executivos", img: "/formacoes_extras/projetos_1_1x.webp" },
   { name: "MBA em IA", spec: "gestão · estratégia", img: "/cards-fomacoes/card-largo-4.webp" },
@@ -36,35 +36,39 @@ function Card({ formacao, index }: { formacao: Formacao; index: number }) {
   return (
     <Link
       href="#matricula"
-      className="group flex h-88 w-72 shrink-0 flex-col overflow-hidden rounded-3xl border border-border bg-card transition-colors duration-300 hover:border-primary/50 md:h-96 md:w-80"
+      className="group relative flex h-88 w-72 shrink-0 overflow-hidden rounded-3xl border border-border transition-colors duration-300 hover:border-primary/50 md:h-96 md:w-80"
     >
-      <div className="relative h-44 w-full shrink-0 overflow-hidden md:h-52">
-        <Image
-          src={formacao.img}
-          alt={formacao.name}
-          fill
-          sizes="320px"
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-        />
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-linear-to-t from-card via-transparent to-transparent"
-        />
-        <span className="absolute left-4 top-4 flex size-8 items-center justify-center rounded-full border border-border bg-background/70 font-heading text-xs tabular-nums text-primary backdrop-blur">
-          {String(index + 1).padStart(2, "0")}
-        </span>
-      </div>
+      {/* imagem full */}
+      <Image
+        src={formacao.img}
+        alt={formacao.name}
+        fill
+        sizes="420px"
+        className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+      />
 
-      <div className="flex flex-1 flex-col justify-between gap-4 p-5">
-        <div className="flex items-start justify-between gap-2">
-          <span className="text-lg font-semibold leading-tight text-foreground">
+      {/* gradiente inferior */}
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent"
+      />
+
+      {/* badge número */}
+      <span className="absolute left-4 top-4 flex size-7 items-center justify-center rounded-full border border-white/20 bg-black/50 font-heading text-xs tabular-nums text-primary backdrop-blur">
+        {String(index + 1).padStart(2, "0")}
+      </span>
+
+      {/* texto sobre a imagem */}
+      <div className="absolute bottom-0 left-0 right-0 flex items-end justify-between gap-2 p-4">
+        <div className="flex flex-col gap-0.5">
+          <span className="text-sm font-semibold leading-tight text-white">
             {formacao.name}
           </span>
-          <ArrowUpRight className="mt-0.5 size-5 shrink-0 text-muted-foreground transition-all duration-300 group-hover:text-primary motion-safe:group-hover:-translate-y-0.5 motion-safe:group-hover:translate-x-0.5" />
+          <span className="font-heading text-[10px] uppercase tracking-[0.14em] text-white/60">
+            {formacao.spec}
+          </span>
         </div>
-        <span className="font-heading text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
-          {formacao.spec}
-        </span>
+        <ArrowUpRight className="size-4 shrink-0 text-white/50 transition-all duration-300 group-hover:text-primary motion-safe:group-hover:-translate-y-0.5 motion-safe:group-hover:translate-x-0.5" />
       </div>
     </Link>
   );
@@ -122,28 +126,41 @@ export function Formacoes() {
     <section
       ref={containerRef}
       id="formacoes"
-      className={cn("relative scroll-mt-24", enabled ? "h-[320vh] pt-24" : "py-24")}
+      className={cn("relative scroll-mt-24 h-full", enabled ? "h-[320vh] pt-24" : "py-24")}
     >
       <div
         className={cn(
           "flex flex-col gap-10 md:gap-14",
-          enabled && "sticky top-0 h-svh justify-center overflow-hidden pt-16"
+          enabled && "sticky top-0 h-svh justify-center pt-16"
         )}
       >
         <Header />
 
-        <motion.div
-          ref={trackRef}
-          style={enabled ? { x } : undefined}
-          className={cn(
-            "flex gap-5 px-4 sm:px-6 md:px-16",
-            !enabled && "no-scrollbar overflow-x-auto pb-4"
+        <div className="relative">
+          {/* fade esquerda */}
+          {enabled && (
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-linear-to-r from-background to-transparent" />
           )}
-        >
-          {FORMACOES.map((formacao, index) => (
-            <Card key={formacao.name} formacao={formacao} index={index} />
-          ))}
-        </motion.div>
+          {/* fade direita */}
+          {enabled && (
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-linear-to-l from-background to-transparent" />
+          )}
+
+          <motion.div
+            ref={trackRef}
+            style={enabled ? { x } : undefined}
+            className={cn(
+              "flex gap-4 px-4 sm:px-6 md:px-16",
+              !enabled && "no-scrollbar overflow-x-auto pb-4"
+            )}
+          >
+            {FORMACOES.map((formacao, index) => (
+              <Card key={formacao.name} formacao={formacao} index={index} />
+            ))}
+            {/* espaço extra no final para o último card não ficar colado */}
+            {enabled && <div className="w-16 shrink-0" />}
+          </motion.div>
+        </div>
       </div>
     </section>
   );

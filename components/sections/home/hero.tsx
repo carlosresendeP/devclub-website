@@ -88,7 +88,7 @@ export function Hero() {
           variants={fadeUp}
           initial="hidden"
           animate="show"
-          className="relative font-heading text-5xl font-light leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl"
+          className="relative text-3xl font-light leading-[0.95] tracking-tight sm:text-5xl lg:text-6xl"
           aria-label={HEADLINE}
         >
           <span aria-hidden className="text-foreground/15">
