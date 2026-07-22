@@ -122,4 +122,4 @@ O projeto foi construído em etapas — planejamento, coleta de referências, ex
 
 ## Licença
 
-Projeto privado e proprietário da DevClub. Uso, cópia ou distribuição não autorizados são proibidos.
+Software proprietário — todos os direitos reservados à DevClub. Uso, cópia, modificação ou distribuição não autorizados são proibidos. Ver [`LICENSE`](LICENSE).
