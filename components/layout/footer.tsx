@@ -49,8 +49,8 @@ export function Footer() {
             matrícula aberta
           </span>
           <h2 className="max-w-3xl font-heading text-4xl font-light leading-[1.05] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-            Pronto para virar o dev que o{" "}
-            <span className="text-gradient-brand">mercado disputa?</span>
+            Pronto Para começar {" "}
+            <span className="text-gradient-brand">sua Jornada?</span>
           </h2>
           <Link
             href="#matricula"

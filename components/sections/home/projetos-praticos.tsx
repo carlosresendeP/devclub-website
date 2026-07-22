@@ -68,11 +68,11 @@ export function ProjetosPraticos() {
           eyebrow="Projetos práticos e reais"
           title={
             <>
-              Tudo com <span className="text-primary">projetos práticos</span> e
-              reais
+              Aplicações reais para{" "}
+              <span className="text-primary">colocar no seu portfólio</span>
             </>
           }
-          lede="Veja o tipo de aplicação que os alunos DevClub constroem — do primeiro deploy ao portfólio que abre portas."
+          lede="Veja o tipo de aplicação que os alunos DevClub constroem,ao todo são mais de 40 projetos do primeiro deploy ao portfólio que abre portas."
           align="center"
           className="mx-auto"
         />

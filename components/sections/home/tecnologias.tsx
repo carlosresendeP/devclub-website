@@ -86,7 +86,7 @@ function MarqueeRow({
 
 export function Tecnologias() {
   return (
-    <section id="tecnologias" className="relative overflow-hidden py-24 sm:py-32">
+    <section id="tecnologias" className="relative overflow-hidden py-24 sm:py-24">
       <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 text-center sm:px-6">
         <span className="font-heading text-[11px] uppercase tracking-[0.2em] text-primary">
           tecnologias_

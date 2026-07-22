@@ -45,7 +45,7 @@ export function LogoFinal() {
           />
           <h2
             aria-label="DevClub"
-            className="select-none font-heading text-[12vw] font-light leading-none tracking-tight text-foreground/10 sm:text-[9vw] lg:text-[6rem]"
+            className="select-none font-heading text-[12vw] font-light leading-none tracking-tight text-foreground/80 sm:text-[9vw] lg:text-[6rem]"
           >
             DevClub
           </h2>

@@ -1,13 +1,12 @@
 "use client";
 
-import { useRef } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Play } from "lucide-react";
 
 import { CountStat } from "@/components/shared/count-stat";
 import { LogoMarquee } from "@/components/shared/logo-marquee";
-import { FilmGrain } from "@/components/ui/film-grain";
+import { ShaderBackground } from "@/components/ui/shader-background";
 import { StarField } from "@/components/ui/star-field";
 import { RotatingText } from "@/components/ui/rotating-text";
 
@@ -56,28 +55,22 @@ const fadeUp = {
 };
 
 export function Hero() {
-  const titleRef = useRef<HTMLHeadingElement>(null);
-
-  const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
-    const el = titleRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    el.style.setProperty("--spot-x", `${event.clientX - rect.left}px`);
-    el.style.setProperty("--spot-y", `${event.clientY - rect.top}px`);
-  };
-
   return (
     <section
       id="inicio"
-      onPointerMove={handlePointerMove}
       className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-4 pt-28 pb-16 text-center sm:px-6 "
     >
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-linear-to-t from-trasparent via-background to-background">
+        <motion.div
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute inset-0 size-full mask-fade-b"
+        >
+          <ShaderBackground className="size-full opacity-70 mix-blend-screen" />
+        </motion.div>
         <StarField className="absolute inset-0 size-full mask-fade-b" />
-        {/* <div className="absolute inset-0 bg-background/50" /> */}
       </div>
-
-      {/* <FilmGrain className="opacity-40" /> */}
 
       <div className="relative z-10 flex w-full max-w-5xl flex-col items-center gap-7">
         <motion.span
@@ -92,48 +85,28 @@ export function Hero() {
         </motion.span>
 
         <motion.h1
-          ref={titleRef}
           custom={1}
           variants={fadeUp}
           initial="hidden"
           animate="show"
-          className="relative text-3xl font-light leading-[0.95] tracking-tight sm:text-5xl lg:text-6xl"
+          className="text-3xl font-light leading-[0.95] tracking-tight text-foreground/80 sm:text-4xl lg:text-5xl"
           aria-label={HEADLINE}
         >
-          <span aria-hidden className="text-foreground/80">
-            Transforme sua
+          <span aria-hidden>
+            Aprenda. Pratique e evolua
             <br />
-            carreira com{" "}
+            sua carreira com{" "}
             <RotatingText
               words={["Programação", "IA", "Dados", "Automações"]}
+              mainClassName="px-2 sm:px-2 md:px-3 text-primary overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
               staggerFrom="last"
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               exit={{ y: "-120%" }}
-              staggerDuration={0.025}
+              staggerDuration={0.05}
               splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
-              transition={{ type: "spring", damping: 30, stiffness: 400 }}
-              rotationInterval={3000}
-              splitBy="characters"
-              auto
-              loop
-              className="italic"
-            />
-          </span>
-          <span aria-hidden className="spotlight-text absolute inset-0">
-            Transforme sua
-            <br />
-            carreira com{" "}
-            <RotatingText
-              words={["Programação", "IA", "Dados", "Automações"]}
-              staggerFrom="last"
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "-120%" }}
-              staggerDuration={0.025}
-              splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
-              transition={{ type: "spring", damping: 30, stiffness: 400 }}
-              rotationInterval={3000}
+              transition={{ type: "spring", damping: 22, stiffness: 140 }}
+              rotationInterval={2000}
               splitBy="characters"
               auto
               loop
@@ -146,7 +119,7 @@ export function Hero() {
           variants={fadeUp}
           initial="hidden"
           animate="show"
-          className="max-w-xl text-balance text-base text-muted-foreground sm:text-lg"
+          className="max-w-xl text-balance text-base text-muted-foreground sm:text-md"
         >
           Programação, Gestão de IA, automações e análise de dados do zero ao
           avançado, com mentoria semanal e uma comunidade que não te deixa parar.

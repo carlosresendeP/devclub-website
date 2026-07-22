@@ -226,6 +226,11 @@
 }
 
 @layer utilities {
+  .cursor-none,
+  .cursor-none * {
+    cursor: none !important;
+  }
+
   .hero-vignette {
     background: radial-gradient(
       120% 90% at 50% 45%,

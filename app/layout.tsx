@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Albert_Sans, Aldrich, Fraunces } from "next/font/google";
 import { SmoothScrollProvider } from "@/components/layout/smooth-scroll-provider";
+import { Preloader } from "@/components/layout/preloader";
 import { GlobalBackground } from "@/components/ui/global-background";
+import { CustomCursor } from "@/components/ui/custom-cursor";
 import "./globals.css";
 
 const albertSans = Albert_Sans({
@@ -40,7 +42,9 @@ export default function RootLayout({
       className={`${albertSans.variable} ${aldrich.variable} ${fraunces.variable} dark h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <Preloader />
         <GlobalBackground />
+        <CustomCursor />
 
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
       </body>
