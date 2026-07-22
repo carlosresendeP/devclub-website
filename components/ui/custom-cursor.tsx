@@ -15,11 +15,18 @@ export function CustomCursor() {
   const ringY = useSpring(y, { damping: 28, stiffness: 320, mass: 0.5 });
 
   useEffect(() => {
-    const mql = window.matchMedia("(pointer: fine)");
-    setEnabled(mql.matches);
-    const onChange = (e: MediaQueryListEvent) => setEnabled(e.matches);
-    mql.addEventListener("change", onChange);
-    return () => mql.removeEventListener("change", onChange);
+    const pointerMql = window.matchMedia("(pointer: fine)");
+    const motionMql = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const update = () => setEnabled(pointerMql.matches && !motionMql.matches);
+    update();
+
+    pointerMql.addEventListener("change", update);
+    motionMql.addEventListener("change", update);
+    return () => {
+      pointerMql.removeEventListener("change", update);
+      motionMql.removeEventListener("change", update);
+    };
   }, []);
 
   useEffect(() => {
@@ -46,12 +53,12 @@ export function CustomCursor() {
     <>
       <motion.div
         aria-hidden
-        className="pointer-events-none fixed left-0 top-0 z-[200] size-2 rounded-full bg-primary"
+        className="pointer-events-none fixed left-0 top-0 z-200 size-2 rounded-full bg-primary"
         style={{ x, y, translateX: "-50%", translateY: "-50%" }}
       />
       <motion.div
         aria-hidden
-        className="pointer-events-none fixed left-0 top-0 z-[200] rounded-full border border-primary/60"
+        className="pointer-events-none fixed left-0 top-0 z-200 rounded-full border border-primary/60"
         style={{ x: ringX, y: ringY, translateX: "-50%", translateY: "-50%" }}
         animate={{
           width: hovering ? 56 : 32,

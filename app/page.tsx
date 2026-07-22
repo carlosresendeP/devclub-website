@@ -1,3 +1,4 @@
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site-config";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { Hero } from "@/components/sections/home/hero";
@@ -15,11 +16,30 @@ import { Garantia } from "@/components/sections/home/garantia";
 import { Faq } from "@/components/sections/home/faq";
 import { LogoFinal } from "@/components/sections/home/logo-final";
 
+const JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  name: SITE_NAME,
+  description: SITE_DESCRIPTION,
+  url: SITE_URL,
+  logo: `${SITE_URL}/LOGO.webp`,
+  sameAs: [
+    "https://instagram.com/devclub",
+    "https://youtube.com/@devclub",
+    "https://linkedin.com/company/devclub",
+    "https://tiktok.com/@devclub",
+  ],
+};
+
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+      />
       <Navbar />
-      <main className="relative z-10 flex flex-1 flex-col">
+      <main id="conteudo-principal" className="relative z-10 flex flex-1 flex-col">
         <Hero />
         <Formacoes />
         <Tecnologias />

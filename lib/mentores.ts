@@ -39,7 +39,7 @@ export const MENTORES: Mentor[] = [
   {
     name: "Juliana",
     role: "Mentora de Carreira",
-    photo: "/professores/Juliana.jpeg",
+    photo: "/professores/Juliana.webp",
     initials: "JU",
   },
   {

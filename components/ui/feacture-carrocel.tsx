@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -118,11 +119,13 @@ export function FeatureCarousel() {
                   transition={{ type: "spring", stiffness: 260, damping: 25, mass: 0.8 }}
                   className="absolute inset-0 origin-center overflow-hidden rounded-[2rem] border-4 border-background bg-background md:rounded-[2.8rem] md:border-8"
                 >
-                  <img
+                  <Image
                     src={feature.image}
                     alt={feature.label}
+                    fill
+                    sizes="(min-width: 1024px) 400px, 90vw"
                     className={cn(
-                      "size-full object-cover transition-all duration-700",
+                      "object-cover transition-all duration-700",
                       isActive ? "grayscale-0 blur-0" : "blur-[2px] brightness-75 grayscale"
                     )}
                   />

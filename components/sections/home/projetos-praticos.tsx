@@ -24,7 +24,7 @@ const PROJETOS: Projeto[] = [
     url: "devbills.app",
     description:
       "Controle de receitas, despesas e relatórios financeiros com dashboards em tempo real.",
-    image: "/Projeto-Devbills.png",
+    image: "/Projeto-Devbills.webp",
     alt: "Dashboard do DevBills com saldo, receitas, despesas e gráficos financeiros",
     stack: ["React", "Node", "PostgreSQL"],
   },
@@ -34,7 +34,7 @@ const PROJETOS: Projeto[] = [
     url: "devburguer.app",
     description:
       "Cardápio digital com carrinho, checkout e painel administrativo para gestão de pedidos.",
-    image: "/projeto-devburger.png",
+    image: "/projeto-devburger.webp",
     alt: "Tela de cardápio e pedidos do DevBurguer, app de delivery",
     stack: ["React", "TypeScript", "Stripe"],
   },
@@ -44,7 +44,7 @@ const PROJETOS: Projeto[] = [
     url: "elitetracker.app",
     description:
       "App de foco com ciclos de produtividade, histórico de sessões e calendário de progresso.",
-    image: "/Projeto-EliteTracker.png",
+    image: "/Projeto-EliteTracker.webp",
     alt: "Tela do Elite Tracker com temporizador de foco e estatísticas",
     stack: ["React", "Node", "MongoDB"],
   },
@@ -54,7 +54,7 @@ const PROJETOS: Projeto[] = [
     url: "elitehome.app",
     description:
       "Plataforma de busca de imóveis com filtros por cidade, bairro, valor e tipo de imóvel.",
-    image: "/Projeto-eliteHome.png",
+    image: "/Projeto-eliteHome.webp",
     alt: "Página inicial do Elite Home, plataforma de busca de imóveis",
     stack: ["Next.js", "Tailwind", "Prisma"],
   },
