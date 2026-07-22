@@ -68,7 +68,7 @@ export function ProjetosPraticos() {
           eyebrow="Projetos práticos e reais"
           title={
             <>
-              Aplicações reais para{" "}
+              Mais de <span className="text-primary text-md">40 projetos</span> para{" "}
               <span className="text-primary">colocar no seu portfólio</span>
             </>
           }
