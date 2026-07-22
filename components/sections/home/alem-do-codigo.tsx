@@ -248,11 +248,11 @@ export function AlemDoCodigo() {
           <p className="text-center text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
             Empresas que contratam nossos alunos
           </p>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-5 sm:gap-x-10 sm:gap-y-6">
             {EMPRESAS.map((empresa) => (
               <div
                 key={empresa.alt}
-                className="flex h-8 w-24 shrink-0 items-center justify-center opacity-60 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 sm:h-10 sm:w-28"
+                className="flex h-7 w-20 shrink-0 items-center justify-center opacity-60 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 sm:h-10 sm:w-28"
               >
                 <Image
                   src={empresa.src}

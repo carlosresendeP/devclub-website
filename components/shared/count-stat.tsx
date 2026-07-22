@@ -26,7 +26,7 @@ export function CountStat({
   className,
 }: CountStatProps) {
   return (
-    <div className={cn("flex items-center gap-4", className)}>
+    <div className={cn("flex flex-col items-center gap-3 sm:flex-row sm:gap-4", className)}>
       {avatars.length > 0 ? (
         <AvatarGroup>
           {avatars.map((avatar, index) => (
