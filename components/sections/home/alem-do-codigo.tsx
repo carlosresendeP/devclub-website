@@ -14,6 +14,7 @@ import Image from "next/image";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { cn } from "@/lib/utils";
+import { EMPRESAS } from "@/lib/empresas";
 
 interface Beneficio {
   icon: LucideIcon;
@@ -59,14 +60,6 @@ const BENEFICIOS: Beneficio[] = [
     description: "Oportunidades que chegam direto pra quem está na comunidade.",
     accent: "secondary",
   },
-];
-
-const EMPRESAS = [
-  { src: "/logos/ifood-logo-png_seeklogo-463141.png", alt: "iFood" },
-  { src: "/logos/bradesco-logo-novo-2018-2.png", alt: "Bradesco" },
-  { src: "/logos/microsoft-logo.png", alt: "Microsoft" },
-  { src: "/logos/google-logo-transparent.png", alt: "Google" },
-  { src: "/logos/intel-logo.svg", alt: "Intel" },
 ];
 
 export function AlemDoCodigo() {
